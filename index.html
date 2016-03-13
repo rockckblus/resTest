@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script language="JavaScript" src="jquery-1.7.2.min.js"></script>
+    <script language="JavaScript" src="db.js"></script>
+    <script language="JavaScript" src="mark.js"></script>
+
+    <script language="JavaScript" src="angular.js"></script>
+    <script language="JavaScript" src="index.js"></script>
+    <style>
+        input {
+            width: 20px;
+            height: 20px;
+        }
+        .left{
+            float: left;
+        }
+    </style>
+</head>
+<body ng-app="city" ng-controller="body">
+
+<div id="content" style="clear: both">
+    <h1><span style="font-size: 14px;color:red" ng-show="item.id"> {{item.id}}.({{item.mark}}分)</span> {{item.title}}</h1>
+
+
+    <!--{//单选 15/10/28}-->
+    <div class="left" ng-if="item.type == 'radio'">[单选]</div>
+    <div style='clear:both' ng-repeat="vo in item.select" ng-if="item.type == 'radio'">&nbsp;&nbsp;
+        <input ng-click="clearMess();" type="radio" name="name{{item.id}}" itemId="{{item.id}}" value="{{vo.k}}" ok="{{vo.ok}}" />{{vo.k}}
+    </div>
+
+    <!--{//多选 15/10/28}-->
+    <div class="left" ng-if="item.type == 'checkbox'">[多选]</div>
+    <div style='clear:both' ng-repeat="vo in item.select" ng-if="item.type == 'checkbox'">&nbsp;&nbsp;
+        <input ng-click="clearMess();" type="checkbox" name="nameCheckBox{{item.id}}" itemId="{{item.id}}" value="{{vo.k}}" ok="{{vo.ok}}" />{{vo.k}}
+    </div>
+    <div style="clear: both"></div>
+
+    <hr/>
+    <button name="next" id="nextButton" style="width: 100px;height: 50px;font-size: 24px;"  ng-click="nextClick();"/>next</button>
+
+    <h1 style="color:red">{{mess}}</h1>
+</div>
+
+
+<!--错题Div-->
+<div style="clear:both;display:none" id="cuoTi" >
+    <h1>总得分：{{allCode}}  </h1>
+
+    <button name="next"  style="width: 100px;height: 50px;font-size: 14px;"  onclick="window.location.href=window.location.href;"/>重新考试</button>
+    <h3>错题</h3>
+    <div style="clear:both;margin-top:20px" ng-repeat="vo in errItem">
+        <div style="clear:both">id:{{vo.id}} <span style="color:red">{{vo.title}}</span></div>
+        <div style="clear:both" ></div>
+        <div style="clear:both;margin-top:5px;">
+            <div class="left" style="font-size: 12px;">正确答案:</div>
+         <div ng-repeat="vo2 in vo.select">
+           <span class="left" style="margin-left: 10px" ng-if="vo2.ok">{{vo2.k}}</span>
+         </div>
+
+        </div>
+        <div style="clear:both"><hr/></div>
+    </div>
+</div>
+
+</body>
+
+
+</html>
